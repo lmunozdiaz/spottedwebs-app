@@ -1,6 +1,5 @@
 import express from "express";
 import cors from "cors";
-import { createUser, getUser } from "@controllers/user";
 
 // Setup
 const app = express();
