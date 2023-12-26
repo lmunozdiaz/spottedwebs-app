@@ -12,7 +12,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 
 // Routes
-app.post("/api/user", createUser);
+app.post("/api/user/signup", createUser);
 app.get("/api/user/:username", getUser);
 
 // Listen
