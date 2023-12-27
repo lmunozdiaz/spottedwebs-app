@@ -3,7 +3,7 @@ USE `spottedwebsdb`;
 CREATE TABLE IF NOT EXISTS `User` (
   `id` BIGINT PRIMARY KEY AUTO_INCREMENT,
   `username` VARCHAR(255) UNIQUE NOT NULL,
-  `password` VARCHAR(255) NOT NULL,
+  `hashedPassword` VARCHAR(255) NOT NULL,
   `createdOn` DATETIME NOT NULL DEFAULT NOW(),
   `updatedOn` DATETIME
 );

@@ -1,9 +1,9 @@
 USE `spottedwebsdb`;
 
-DROP TABLE IF EXISTS `image_collection`;
+DROP TABLE IF EXISTS `ImageCollection`;
 
-DROP TABLE IF EXISTS `collection`;
+DROP TABLE IF EXISTS `Collection`;
 
-DROP TABLE IF EXISTS `image`;
+DROP TABLE IF EXISTS `Image`;
 
-DROP TABLE IF EXISTS `user`;
+DROP TABLE IF EXISTS `User`;
