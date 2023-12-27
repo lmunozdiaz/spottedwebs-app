@@ -1,26 +1,18 @@
-import bcrypt from "bcrypt";
 import { findByUsername, insertOne } from "@repositories/user";
 
 export async function createUser(req, res) {
   try {
     const { username, password } = req.body;
-    let hashedPassword = bcrypt.hash(password, 12);
+    let hashedPassword = await Bun.password.hash(password);
 
     let [possibleUser] = await findByUsername(username);
-
     let userAlreadyExists = possibleUser != null;
-    if (userAlreadyExists) {
-      return res.status(400).send("User already exists");
-    }
+    if (userAlreadyExists) return res.status(400).send("User already exists");
 
     let [newUser] = await insertOne(username, hashedPassword);
-
     let userNotCreated = newUser == null;
-    if (userNotCreated) {
-      return res.status(404).send("User not created");
-    }
-
-    res.status(201).send(newUser);
+    if (userNotCreated) return res.status(404).send("User not created");
+    return res.status(201).send(newUser);
   } catch (error) {
     console.log("Error:", error);
   }
@@ -48,13 +40,12 @@ export async function loginUser(req, res) {
     const { username, password } = req.body;
 
     let [user] = await findByUsername(username);
-
     let userNotFound = user == null;
     if (userNotFound) {
       return res.status(404).send("No user found");
     }
 
-    let passwordComparison = await bcrypt.compare(
+    let passwordComparison = await Bun.password.verify(
       password,
       user.hashedPassword
     );
