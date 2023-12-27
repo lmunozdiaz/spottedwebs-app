@@ -17,7 +17,8 @@
       "@config/*": ["./src/config/*"],
       "@util/*": ["./src/util/*"],
       "@repositories/*": ["./src/repositories/*"],
-      "@controllers/*": ["./src/controllers/*"]
+      "@controllers/*": ["./src/controllers/*"],
+      "@routes/*": ["./src/routes/*"]
     },
     "skipLibCheck": true,
     "strict": true,
