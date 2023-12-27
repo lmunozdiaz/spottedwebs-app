@@ -6,7 +6,8 @@
     "dev": "bun run --hot src/index.js"
   },
   "devDependencies": {
-    "bun-types": "latest"
+    "bun-types": "latest",
+    "eslint": "^8.56.0"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
