@@ -1,13 +1,13 @@
 import { pool } from "@config/db/database";
 
-export async function insertOne(username, password) {
+export async function insertOne(username, hashedPassword) {
   try {
     const INSERT_STATEMENT =
-      "INSERT INTO User (username, password) VALUES (?, ?);";
+      "INSERT INTO User (username, hashedPassword) VALUES (?, ?);";
 
     let [insertedUser] = await pool.query(INSERT_STATEMENT, [
       username,
-      password,
+      hashedPassword,
     ]);
 
     let { insertId } = insertedUser;
