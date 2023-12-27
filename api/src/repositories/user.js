@@ -1,12 +1,28 @@
 import { pool } from "@config/db/database";
 
-export async function insertOne(username, email, password) {
+export async function insertOne(username, password) {
   try {
-    const statement =
-      "INSERT INTO User (username, email, password) VALUES (?, ?, ?);";
-    const [result] = await pool.query(statement, [username, email, password]);
-    const { insertId } = result;
-    return await findById(insertId);
+    const INSERT_STATEMENT =
+      "INSERT INTO User (username, password) VALUES (?, ?);";
+
+    let [insertedUser] = await pool.query(INSERT_STATEMENT, [
+      username,
+      password,
+    ]);
+
+    let { insertId } = insertedUser;
+    let newUser = await findById(insertId);
+    return newUser;
+  } catch (error) {
+    console.log("Query error:", error);
+  }
+}
+
+export async function findById(id) {
+  try {
+    const SELECT_STATEMENT = "SELECT * FROM User WHERE id = ?";
+    let [user] = await pool.query(SELECT_STATEMENT, [id]);
+    return user;
   } catch (error) {
     console.log("Query error:", error);
   }
@@ -14,9 +30,9 @@ export async function insertOne(username, email, password) {
 
 export async function findByUsername(username) {
   try {
-    const statement = "SELECT * FROM User WHERE username = ?;";
-    const [result] = await pool.query(statement, [username]);
-    return result;
+    const SELECT_STATEMENT = "SELECT * FROM User WHERE username = ?;";
+    let [user] = await pool.query(SELECT_STATEMENT, [username]);
+    return user;
   } catch (error) {
     console.log("Query error:", error);
   }

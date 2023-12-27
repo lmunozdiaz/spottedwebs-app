@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import { createUser, getUser } from "@controllers/user";
+import { router as userRouter } from "./routes/user";
 
 // Setup
 const app = express();
@@ -11,9 +11,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 
-// Routes
-app.post("/api/user/signup", createUser);
-app.get("/api/user/:username", getUser);
+// User Routes
+app.use("/api/users", userRouter);
 
 // Listen
 app.listen(PORT, () => `Listening on localhost: ${PORT}`);
