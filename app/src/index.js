@@ -1,12 +1,15 @@
 import React from "react";
-import { createRoot } from "react-dom/client";
-import { App } from "./App.jsx";
+import ReactDOM from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
+import App from "@src/App.jsx";
 import "@src/reset.css";
 import "@src/index.css";
 
-const root = createRoot(document.getElementById("root"));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.Fragment>
-    <App></App>
-  </React.Fragment>
+  <BrowserRouter>
+    <React.Fragment>
+      <App></App>
+    </React.Fragment>
+  </BrowserRouter>
 );
