@@ -2,14 +2,14 @@ import { findByUsername, insertOne } from "@repositories/user";
 
 export async function createUser(req, res) {
   try {
-    const { username, password } = req.body;
+    const { username, password, firstName, lastName } = req.body;
     let hashedPassword = await Bun.password.hash(password);
 
     let [possibleUser] = await findByUsername(username);
     let userAlreadyExists = possibleUser != null;
     if (userAlreadyExists) return res.status(400).send("User already exists");
 
-    let [newUser] = await insertOne(username, hashedPassword);
+    let [newUser] = await insertOne(username, hashedPassword, firstName, lastName);
     let userNotCreated = newUser == null;
     if (userNotCreated) return res.status(404).send("User not created");
     return res.status(201).send(newUser);
