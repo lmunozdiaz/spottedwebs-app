@@ -1,9 +1,9 @@
 {
   "name": "api",
-  "module": "/src/index.js",
+  "module": "/src/server.js",
   "type": "module",
   "scripts": {
-    "dev": "bun run --hot src/index.js"
+    "dev": "bun run --hot src/server.js"
   },
   "devDependencies": {
     "bun-types": "latest"
