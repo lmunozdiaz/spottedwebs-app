@@ -1,18 +1,22 @@
-import { findByUsername, insertOne } from "@repositories/user";
+import userRepository from "@/repositories/user";
 
 export async function createUser(req, res) {
   try {
     const { username, password, firstName, lastName } = req.body;
     let hashedPassword = await Bun.password.hash(password);
 
-    let [possibleUser] = await findByUsername(username);
+    let [possibleUser] = await userRepository.findOne(username);
     let userAlreadyExists = possibleUser != null;
-    if (userAlreadyExists) return res.status(400).send("User already exists");
+    if (userAlreadyExists) return res.status(400).json("User already exists");
 
-    let [newUser] = await insertOne(username, hashedPassword, firstName, lastName);
+    let [newUser] = await insertOne({
+      username,
+      hashedPassword,
+    });
     let userNotCreated = newUser == null;
-    if (userNotCreated) return res.status(404).send("User not created");
-    return res.status(201).send(newUser);
+    if (userNotCreated) return res.status(404).json("User not created");
+
+    return res.status(201).json(newUser);
   } catch (error) {
     console.log("Error:", error);
   }
@@ -21,51 +25,8 @@ export async function createUser(req, res) {
 export async function getUser(req, res) {
   try {
     const { username } = req.params;
-
-    let [user] = await findByUsername(username);
-
-    let userNotFound = user == null;
-    if (userNotFound) {
-      return res.status(404).send("No user found");
-    }
-
-    res.status(200).send(user);
-  } catch (error) {
-    console.log("Error:", error);
-  }
-}
-
-export async function loginUser(req, res) {
-  try {
-    const { username, password } = req.body;
-
-    let [user] = await findByUsername(username);
-    let userNotFound = user == null;
-    if (userNotFound) {
-      return res.status(404).send("No user found");
-    }
-
-    let passwordComparison = await Bun.password.verify(
-      password,
-      user.hashedPassword
-    );
-    let passwordsMatch = passwordComparison == true;
-    if (passwordsMatch) {
-      console.log("Logged in!");
-      req.session.user = user;
-      return res.status(200).send(user);
-    } else {
-      return res.status(400).send("Wrong crendentials");
-    }
-  } catch (error) {
-    console.log("Error:", error);
-  }
-}
-
-export async function logoutUser(req, res) {
-  try {
-    req.session.user = null;
-    return res.status(200).send("Logged out");
+    let user = await userRepository.findOne(username);
+    return res.status(200).json(user);
   } catch (error) {
     console.log("Error:", error);
   }

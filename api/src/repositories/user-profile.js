@@ -1,20 +1,13 @@
-import { pool } from "@config/db/database";
+import db from "@config/db/database.js";
 
-export async function insertOne(firstName, lastName, userId) {
+export async function insertOne(userProfile) {
   try {
-    const INSERT_USER_PROFILE =
-      "INSERT INTO UserProfile (fistName, lastName, userId) VALUES (?, ?, ?);";
-
-    let [profileToInsert] = await pool.query(INSERT_USER_PROFILE, [
-      firstName,
-      lastName,
-      userId,
-    ]);
-
-    let isInserted = profileToInsert != null;
-
-    return isInserted;
+    let { objectKey, firstName, lastName, userId } = userProfile;
+    await db.query(
+      "INSERT INTO UserProfile (objectKey, firstName, lastName, userId) VALUES (?, ?, ?, ?);",
+      [objectKey, firstName, lastName, userId]
+    );
   } catch (error) {
-    console.log("Repository error:", error);
+    console.log(error);
   }
 }
