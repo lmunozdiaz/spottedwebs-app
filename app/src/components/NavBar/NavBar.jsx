@@ -5,14 +5,38 @@ import { Link } from "react-router-dom";
 
 let nav = stylex.create({
   container: {
+    backgroundColor: "#080808",
+    borderBottom: "1px solid #3b3b3b",
     display: "grid",
     gridTemplateColumns: "1fr 1fr 1fr",
-    height: "6.4rem",
     placeItems: "center",
+    padding: "2rem 0",
   },
   linkList: {
     display: "flex",
     gap: "2rem",
+  },
+  link: {
+    ":hover": {
+      color: "#f5f5f5",
+    },
+    fontFamily: "Bebas Neue, sans-serif",
+    fontSize: "2rem",
+    transition: "all 0.2s",
+  },
+  linkButton: {
+    ":hover": {
+      color: "#080808",
+      backgroundColor: "#f5f5f5",
+      borderColor: "#f5f5f5",
+    },
+    fontFamily: "Bebas Neue, sans-serif",
+    fontSize: "2rem",
+    lineHeight: "normal",
+    border: "1px solid #b3b3b3",
+    borderRadius: "25px",
+    padding: "0.6rem 4rem",
+    transition: "all 0.2s",
   },
   logo: {
     width: "17rem",
@@ -24,13 +48,19 @@ export function NavBar() {
     <nav {...stylex.props(nav.container)}>
       <ul {...stylex.props(nav.linkList)}>
         <li>
-          <Link to="/images">Images</Link>
+          <Link to="/images" {...stylex.props(nav.link)}>
+            Images
+          </Link>
         </li>
         <li>
-          <Link to="/collections">Collections</Link>
+          <Link to="/collections" {...stylex.props(nav.link)}>
+            Collections
+          </Link>
         </li>
         <li>
-          <Link to="/images/latest">Latest</Link>
+          <Link to="/images/latest" {...stylex.props(nav.link)}>
+            Latest
+          </Link>
         </li>
       </ul>
       <Link to="/">
@@ -38,10 +68,14 @@ export function NavBar() {
       </Link>
       <ul {...stylex.props(nav.linkList)}>
         <li>
-          <Link to="/login">Login</Link>
+          <Link to="/login" {...stylex.props(nav.linkButton)}>
+            Login
+          </Link>
         </li>
         <li>
-          <Link to="/register">Register</Link>
+          <Link to="/register" {...stylex.props(nav.linkButton)}>
+            Register
+          </Link>
         </li>
       </ul>
     </nav>
