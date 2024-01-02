@@ -5,6 +5,8 @@ import logo from "@assets/logo.svg";
 
 const footer = stylex.create({
   container: {
+    backgroundColor: "#080808",
+    borderTop: "1px solid #3b3b3b",
     padding: "1rem 6rem",
   },
   group: {
