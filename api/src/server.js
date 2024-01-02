@@ -1,7 +1,7 @@
 import express from "express";
 import session from "express-session";
 import cors from "cors";
-import { router as userRouter } from "@routes/user";
+import userRouter from "@routes/public/user.js";
 
 // Setup
 const app = express();
@@ -11,16 +11,22 @@ const PORT = process.env.PORT || 1726;
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(
-  session({
-    secret: "add a random secret string here",
-    resave: false,
-    saveUninitialized: true,
+  cors({
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
+    credentials: true,
   })
 );
-app.use(cors());
+app.use(
+  session({
+    name: "_the_cookie",
+    secret: "secret",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
 
-// User Routes
-app.use("/api/users", userRouter);
+app.use("/api/public", userRouter);
 
 // Listen
 app.listen(PORT, () => `Listening on localhost: ${PORT}`);
