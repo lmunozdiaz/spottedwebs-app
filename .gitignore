@@ -348,4 +348,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# REST API
+*.rest
+
 # End of https://www.toptal.com/developers/gitignore/api/macos,linux,windows,node,visualstudiocode,webstorm
