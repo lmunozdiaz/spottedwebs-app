@@ -1,4 +1,5 @@
 import crypto from "crypto";
 
-export const generateKey = (bytes = 32) =>
-  crypto.randomBytes(bytes).toString("hex");
+export function generateKey(bytes = 32) {
+  return crypto.randomBytes(bytes).toString("hex");
+}
