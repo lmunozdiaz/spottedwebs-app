@@ -29,6 +29,11 @@ const form = stylex.create({
     padding: "5rem",
     boxShadow: "0px 4px 40px 8px rgba(0, 0, 0, 0.5)",
   },
+  title: {
+    fontFamily: "Bebas Neue",
+    fontWeight: "bold",
+    marginBottom: "2rem",
+  },
   field: {
     display: "flex",
     flexDirection: "column",
@@ -82,6 +87,7 @@ export function RegisterPage() {
         action={REGISTER_URL}
         method="POST"
       >
+        <h2 {...stylex.props(form.title)}>Register</h2>
         <label {...stylex.props(form.field)} htmlFor="username">
           Username:
           <input {...stylex.props(form.input)} id="username" name="username" />
