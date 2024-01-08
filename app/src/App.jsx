@@ -9,19 +9,22 @@ import {
   RegisterPage,
 } from "@pages";
 import { MainLayout } from "@layouts";
+import { AuthProvider } from "./context/AuthContext";
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<MainLayout />}>
-        <Route index element={<HomePage />} />
-        <Route path="images" element={<ImagesPage />} />
-        <Route path="collections" element={<CollectionsPage />} />
-        <Route path="login" element={<LoginPage />} />
-        <Route path="register" element={<RegisterPage />} />
-      </Route>
-      <Route path="*" element={<NotFoundPage />}></Route>
-    </Routes>
+    <AuthProvider>
+      <Routes>
+        <Route path="/" element={<MainLayout />}>
+          <Route index element={<HomePage />} />
+          <Route path="images" element={<ImagesPage />} />
+          <Route path="collections" element={<CollectionsPage />} />
+          <Route path="login" element={<LoginPage />} />
+          <Route path="register" element={<RegisterPage />} />
+        </Route>
+        <Route path="*" element={<NotFoundPage />}></Route>
+      </Routes>
+    </AuthProvider>
   );
 }
 

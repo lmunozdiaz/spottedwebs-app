@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import stylex from "@stylexjs/stylex";
 import logo from "@assets/logo.svg";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 
 let nav = stylex.create({
   container: {
@@ -24,7 +25,7 @@ let nav = stylex.create({
     fontSize: "2rem",
     transition: "all 0.2s",
   },
-  linkButton: {
+  button: {
     ":hover": {
       color: "#080808",
       backgroundColor: "#f5f5f5",
@@ -44,6 +45,14 @@ let nav = stylex.create({
 });
 
 export function NavBar() {
+  const { isLoggedIn, logout, user } = useContext(AuthContext);
+
+  useEffect(() => {
+    setTimeout(() => {
+      console.log(user);
+    }, 2000);
+  });
+
   return (
     <nav {...stylex.props(nav.container)}>
       <ul {...stylex.props(nav.linkList)}>
@@ -66,18 +75,26 @@ export function NavBar() {
       <Link to="/">
         <img src={logo} alt="The website logo" {...stylex.props(nav.logo)} />
       </Link>
-      <ul {...stylex.props(nav.linkList)}>
-        <li>
-          <Link to="/login" {...stylex.props(nav.linkButton)}>
-            Login
-          </Link>
-        </li>
-        <li>
-          <Link to="/register" {...stylex.props(nav.linkButton)}>
-            Register
-          </Link>
-        </li>
-      </ul>
+      {isLoggedIn ? (
+        <>
+          <button {...stylex.props(nav.button)} onClick={logout}>
+            Logout
+          </button>
+        </>
+      ) : (
+        <ul {...stylex.props(nav.linkList)}>
+          <li>
+            <Link to="/login" {...stylex.props(nav.button)}>
+              Login
+            </Link>
+          </li>
+          <li>
+            <Link to="/register" {...stylex.props(nav.button)}>
+              Register
+            </Link>
+          </li>
+        </ul>
+      )}
     </nav>
   );
 }

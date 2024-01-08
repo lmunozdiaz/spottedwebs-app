@@ -71,13 +71,17 @@ const form = stylex.create({
 });
 
 export function RegisterPage() {
-  const REGISTER_URL = "/";
+  const REGISTER_URL = "http://localhost:1726/api/auth/register";
   return (
     <div
       {...stylex.props(main.container)}
       style={{ backgroundImage: `url(${registerBackground})` }}
     >
-      <form {...stylex.props(form.container)} action={REGISTER_URL}>
+      <form
+        {...stylex.props(form.container)}
+        action={REGISTER_URL}
+        method="POST"
+      >
         <label {...stylex.props(form.field)} htmlFor="username">
           Username:
           <input {...stylex.props(form.input)} id="username" name="username" />

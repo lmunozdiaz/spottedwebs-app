@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import stylex from "@stylexjs/stylex";
 import loginBackground from "@assets/spiderman04.webp";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 
 const main = stylex.create({
   container: {
@@ -71,16 +72,30 @@ const form = stylex.create({
 });
 
 export function LoginPage() {
-  const LOGIN_URL = "/";
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const { login } = useContext(AuthContext);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    login(username, password);
+  };
+
   return (
     <div
       {...stylex.props(main.container)}
       style={{ backgroundImage: `url(${loginBackground})` }}
     >
-      <form {...stylex.props(form.container)} action={LOGIN_URL}>
+      <form {...stylex.props(form.container)} onSubmit={(e) => handleSubmit(e)}>
         <label {...stylex.props(form.field)} htmlFor="username">
           Username:
-          <input {...stylex.props(form.input)} id="username" name="username" />
+          <input
+            {...stylex.props(form.input)}
+            id="username"
+            name="username"
+            onChange={(e) => setUsername(e.target.value)}
+          />
         </label>
         <label {...stylex.props(form.field)} htmlFor="password">
           Password:
@@ -89,12 +104,16 @@ export function LoginPage() {
             id="password"
             type="password"
             name="password"
+            onChange={(e) => setPassword(e.target.value)}
           />
           <Link to="/login" {...stylex.props(form.link)}>
             Forgot your password?
           </Link>
         </label>
-        <button {...stylex.props(form.submitButton)} type="submit">
+        <button
+          {...stylex.props(form.submitButton)}
+          onClick={(e) => handleSubmit(e)}
+        >
           Login
         </button>
         <Link to="/register" {...stylex.props(form.link)}>
