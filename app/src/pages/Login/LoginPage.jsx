@@ -4,7 +4,7 @@ import loginBackground from "@assets/spiderman04.webp";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 
-const main = stylex.create({
+const page = stylex.create({
   container: {
     alignItems: "center",
     backgroundColor: "#141414",
@@ -13,7 +13,6 @@ const main = stylex.create({
     backgroundSize: "cover",
     display: "flex",
     justifyContent: "center",
-    padding: "10rem",
   },
 });
 
@@ -89,7 +88,7 @@ export function LoginPage() {
 
   return (
     <div
-      {...stylex.props(main.container)}
+      {...stylex.props(page.container)}
       style={{ backgroundImage: `url(${loginBackground})` }}
     >
       <form {...stylex.props(form.container)} onSubmit={(e) => handleSubmit(e)}>
